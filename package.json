@@ -1,0 +1,9 @@
+{
+  "name": "orb-trader",
+  "version": "1.0.0",
+  "description": "Opening Range Breakout automated paper trader",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  }
+}

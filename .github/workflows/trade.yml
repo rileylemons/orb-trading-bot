@@ -1,0 +1,30 @@
+name: ORB Trading Bot
+
+on:
+  schedule:
+    # 14:05 UTC = 10:05 AM EDT (summer) / 9:05 AM EST (winter)
+    # Bot waits internally until 9:15 screener, 9:30 open, 9:45 OR close
+    - cron: '5 14 * * 1-5'
+  workflow_dispatch:   # lets you click "Run workflow" manually to test
+
+jobs:
+  trade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360   # GitHub's 6-hour hard limit
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Run ORB bot
+        env:
+          ALPACA_KEY:    ${{ secrets.ALPACA_KEY }}
+          ALPACA_SECRET: ${{ secrets.ALPACA_SECRET }}
+          EOD_HOUR:   '15'
+          EOD_MINUTE: '0'
+        run: node bot.js

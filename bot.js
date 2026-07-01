@@ -114,7 +114,7 @@ async function runScreener() {
 
         const changePct = Math.abs((price - prevClose) / prevClose * 100);
         if (changePct >= cfg.MIN_PREMARKET_CHANGE_PCT && prevVolume >= cfg.MIN_VOLUME && price >= cfg.MIN_PRICE) {
-          qualifying.push({ symbol: sym, price, changePct, volume });
+          qualifying.push({ symbol: sym, price, changePct, volume: prevVolume });
         }
       }
     } catch (e) {

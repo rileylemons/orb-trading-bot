@@ -315,6 +315,12 @@ async function run() {
     process.exit(1);
   }
 
+  // Bail out if already past EOD — nothing to trade today
+  if (isAfterET(cfg.EOD_HOUR, cfg.EOD_MINUTE)) {
+    log(`Past end-of-day (${cfg.EOD_HOUR}:${String(cfg.EOD_MINUTE).padStart(2,'0')} ET) — market session over. Exiting.`);
+    process.exit(0);
+  }
+
   // 1. Pre-market screen
   if (!isAfterET(cfg.SCREEN_HOUR, cfg.SCREEN_MINUTE)) {
     await waitUntilET(cfg.SCREEN_HOUR, cfg.SCREEN_MINUTE, 0, '9:15 AM ET screener');
